@@ -13,7 +13,7 @@ function Test-IPPrivate ()
     # 192.168.0.0 - 192.168.255.255
     
     # Validate the IP address
-    if (Test-IPFormat $ip) {
+    if (!(Test-IPFormat $ip)) {
         Write-Verbose "IP address $ip is in valid IP format"
         return $false
     }    
