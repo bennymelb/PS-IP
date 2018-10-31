@@ -1,6 +1,6 @@
 # This is a library for IP related function in powershell
 
-function Test-PrivateIP ()
+function Test-IPPrivate ()
 {
     Param 
     (
@@ -118,4 +118,4 @@ function Test-IPFormat ()
 }
 
 # Export only the necessary function and Alias
-Export-ModuleMember -Function Test-PrivateIP, Test-IPFormat
+Export-ModuleMember -Function Test-IPPrivate, Test-IPFormat
