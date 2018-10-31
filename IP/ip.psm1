@@ -84,7 +84,7 @@ function Test-IPFormat ()
     }
        
     # each octet has a minimum of 0 and and maximum of 255
-    foreach ($octet in ($ip.Split(".")) 
+    foreach ($octet in ($ip.Split("."))) 
     {
         if ( [int16]$octet )
         {
