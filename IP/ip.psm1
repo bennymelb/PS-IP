@@ -62,49 +62,61 @@ function Test-IPFormat ()
         [string]$ip
     )
     
+    $testswitch = $true
+
     # IP has a minimum lenght of 7 (0.0.0.0) and a maximum lenght of 15 (255.255.255.255)
     if ( ($ip.Length -lt 7) -or ($ip.Length -gt 15) )
     {
         Write-Verbose "$ip is shorter than 7 characters (0.0.0.0) or longer than 15 characters (255.255.255.255)"
-        return $false
+        $testswitch = $false
     }
 
     # IP must have three dots 
     If ( ([regex]::Matches($ip, "\.")).Count -ne 3)
     {
         Write-Verbose "$ip does not have 3 dots"
-        return $false
+        $testswitch = $false
     }
 
     # IP must have 4 octets 
     if ( $($ip.Split(".")).Count -ne 4 )
     {
         Write-Verbose "$ip does not have 4 octets"
-        return $false
+        $testswitch = $false
     }
        
     # each octet has a minimum of 0 and and maximum of 255
     foreach ($octet in ($ip.Split("."))) 
     {
-        if ( [int16]$octet )
-        {
-            Write-Verbose "$ip contains octet that is not a number"
-            return $false
+        try { 
+            # Test if the octet is a number
+            [int16]$octet | Out-Null
         }
-        else
+        Catch { 
+            Write-Verbose "$ip contains $octet that is not a number"
+            $testswitch = $false
+            break
+        }
+        If ( ([int16]$octet -lt 0) -or ([int16]$octet -gt 255) )
         {
-            If ( ($octet -lt 0) -or ($octet -gt 255) )
-            {
-                Write-Verbose "$ip contains octet that is outside of 0 - 255 ranges"
-                return $false
-            }
+            Write-Verbose "$ip contains $octet that is outside of 0 - 255 ranges"
+            $testswitch = $false
+            break
         }
     }
 
     # IP passes all the validation
-    Write-Verbose "$ip passes the format validate"
-    return $true
-
+    If ($testswitch)
+    {
+        Write-Verbose "$ip passes the format validation"
+        return $true
+    }
+    else 
+    {
+        Write-Verbose "$ip failed the format validation"
+        return $false    
+    }
+    
     # regex one liner (alternative way) 
     # commenting this out because I want user without regex knowledge understand how the validation logic works
     # if ( ([regex]::Matches($ip, "\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b")).Success )
