@@ -13,11 +13,11 @@ If the IP passes the validation the function will return true, if not it will re
 ```
 PS C:\Users\blo> Test-IPFormat "1.1.1.1"
 True
-PS C:\User\blo> Test-IPFormat "a.a.a.a"
+PS C:\Users\blo> Test-IPFormat "a.a.a.a"
 False
-PS C:\User\blo> Test-IPFormat "999.999.999.999"
+PS C:\Users\blo> Test-IPFormat "999.999.999.999"
 False
-PS C:\User\blo> Test-IPFormat 1.1.1.1
+PS C:\Users\blo> Test-IPFormat 1.1.1.1
 True
 
 ```
@@ -27,9 +27,9 @@ This function takes a string input and check if its a IPv4 private IP address (R
 If the IP address is a private IP address the function will return true, if not it will return false
 
 ```
-PS C:\User\blo> Test-IPPrivate "1.1.1.1"
+PS C:\Users\blo> Test-IPPrivate "1.1.1.1"
 False
-PS C:\Userblo> Test-IPPrivate "10.1.1.1"
+PS C:\Users\blo> Test-IPPrivate "10.1.1.1"
 True
 
 ```
